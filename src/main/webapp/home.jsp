@@ -12,9 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Home</title>
-<%--
     <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
---%>
     <style type="text/css">
         body {
             padding-top: 70px;

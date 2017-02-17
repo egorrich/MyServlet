@@ -3,7 +3,12 @@
 <html>
 <head>
     <title>Users</title>
-   <%-- <link href="css/bootstrap.css" type="text/css" rel="stylesheet">--%>
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+    </style>
 </head>
 <body>
 <%@include file="header.jsp"%>
