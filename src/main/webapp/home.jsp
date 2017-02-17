@@ -16,6 +16,7 @@
     <style type="text/css">
         body {
             padding-top: 70px;
+            padding-bottom: 70px;
         }
         table1 {
             width: 100px; /* ширина */
@@ -25,31 +26,10 @@
             text-align: center; /* размещение текста */
         }
     </style>
-   <%-- <style>
-        table {
-            border-spacing: 0;
-        }
-        tr:nth-child(2n) {
-            background: #f0f0f0;
-        }
-        tr:nth-child(2n+1) {
-            background: #666;
-            color: #fff;
-        }
-        tr:nth-child(1) {
-            background: #FFE4E1;
-            color: inherit;
-        }
-
-    </style>--%>
 
 </head>
     <body>
-        <%--<div style="text-align: right">Hello, ${sName}
-            <form action="/logout" method="post">
-                <input type="submit" value="Log Out">
-            </form>
-        </div>--%>
+
         <c:if test="${list != null}">
 
         <table class="table table-striped" border="1">
@@ -77,7 +57,8 @@
                     <td> ${items.lastName}</td>
                     <td> ${items.password}</td>
                     <td>
-                        <a href="/users.jsp?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>
+                       <%-- <a href="/users.jsp?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>--%>
+                           <a href="/users?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>
                     </td>
                     <td><form action="/users">
                         <input type="submit" value="delete">
@@ -88,7 +69,7 @@
             </c:forEach>
             </tbody>
          </table>
-            <form action="users.jsp">
+            <form action="/users.jsp">
                 <input type="submit" value="create">
             </form>
         </c:if>

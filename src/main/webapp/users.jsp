@@ -18,7 +18,7 @@
         <input type="submit" value="Log Out">
     </form>
 </div>--%>
-<c:if test="${param.id == null}">
+<c:if test="${user == null}">
 <form action="/users" method="post">
     <input type="text" name="name" placeholder="Enter Name">
     <input type="text" name="lastName" placeholder="Enter Last Name">
@@ -28,15 +28,15 @@
 </form>
 </c:if>
 
-<c:if test="${param.id != null}">
-<form action="/users" method="post">
+<c:if test="${user != null}">
+<form action="/users" method="get">
     Name
-    <input type="text" name="name" value="${param.name}">
+    <input type="text" name="name" value="${user.name}">
     Last name
-    <input type="text" name="lastName" value="${param.lastName}" >
+    <input type="text" name="lastName" value="${user.lastName}" >
     Password
-    <input type="text" name="password" value="${param.password}" >
-    <input type="hidden" name="id" value="${param.id}" >
+    <input type="text" name="password" value="${user.password}" >
+    <input type="hidden" name="id" value="${user.id}" >
     <input type="hidden" name="operation" value="update">
     <input type="submit" value="Update User">
 </form>

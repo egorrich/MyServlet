@@ -34,7 +34,34 @@ public class UsersServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        if (req.getParameter("operation").equals("delete") ) {
+        String operation = req.getParameter("operation");
+        if ((operation == null) || (operation.equals("update")) ) {
+            id = Integer.parseInt(req.getParameter("id"));
+            name = req.getParameter("name");
+            lastName = req.getParameter("lastName");
+            password = req.getParameter("password");
+            if (operation == null) {
+                User user = new User(id, name, lastName, password);
+                req.getSession().setAttribute("user", user);
+                resp.sendRedirect("/users.jsp");
+            }
+            else {
+                String persistedUserName = getPersistedUserName();
+                User user = new User(id, name, lastName, password);
+                userDAO.update(user);
+                req.getSession().setAttribute("user", null);
+                String sName = (String) req.getSession().getAttribute("sName");
+                if (persistedUserName.equals(sName)) {
+                    req.getSession().setAttribute("sName", name);
+                }
+
+                //resp.sendRedirect("/MyServlet");
+                req.getRequestDispatcher("/MyServlet").forward(req, resp);
+            }
+
+        }
+
+        if (!(req.getParameter("operation") == null) && req.getParameter("operation").equals("delete") ) {
             id = Integer.parseInt(req.getParameter("id"));
             userDAO.delete(id);
             resp.sendRedirect("/MyServlet");
@@ -54,7 +81,7 @@ public class UsersServlet extends HttpServlet{
             resp.sendRedirect("/MyServlet");
         }
 
-        if (req.getParameter("operation").equals("update") ) {
+        /*if (req.getParameter("operation").equals("update") ) {
             id = Integer.parseInt(req.getParameter("id"));
             name = req.getParameter("name");
             lastName = req.getParameter("lastName");
@@ -70,7 +97,7 @@ public class UsersServlet extends HttpServlet{
             }
 
             resp.sendRedirect("/MyServlet");
-        }
+        }*/
     }
 
     private String getPersistedUserName() {
