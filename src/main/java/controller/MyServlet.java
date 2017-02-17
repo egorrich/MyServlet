@@ -1,8 +1,8 @@
 package controller;
 
 import model.User;
-import services.IUserOperations;
-import services.IUserOperationsImpl;
+import services.UserDAO;
+import services.UserDAOImpl;
 import utils.SessionValidator;
 
 import javax.servlet.ServletException;
@@ -19,11 +19,11 @@ public class MyServlet extends HttpServlet {
 
     private final static String TABLE_NAME = "Users";
 
-    private IUserOperations iUserOperations;
+    private UserDAO userDAO;
 
     @Override
     public void init() throws ServletException {
-        iUserOperations = new IUserOperationsImpl();
+        userDAO = new UserDAOImpl();
     }
 
 
@@ -44,7 +44,7 @@ public class MyServlet extends HttpServlet {
                 (String) req.getSession().getAttribute("sPassword"))) {
             resp.setContentType("text/html");
             resp.setCharacterEncoding("UTF-8");
-            List<User> list = iUserOperations.findAll();
+            List<User> list = userDAO.findAll();
             Collections.sort(list);
             req.getSession().setAttribute("list", list);
             req.getSession().setAttribute("TableName", TABLE_NAME);

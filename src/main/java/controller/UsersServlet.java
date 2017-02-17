@@ -1,17 +1,15 @@
 package controller;
 
 import model.User;
-import services.IUserOperations;
-import services.IUserOperationsImpl;
+import services.UserDAO;
+import services.UserDAOImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by egor on 10.2.17.
@@ -22,7 +20,7 @@ public class UsersServlet extends HttpServlet{
 
     private final String TABLE_NAME = "Users";
 
-    IUserOperations iUserOperations;
+    UserDAO userDAO;
     private String name;
     private String lastName;
     private int id;
@@ -30,7 +28,7 @@ public class UsersServlet extends HttpServlet{
 
     @Override
     public void init() throws ServletException {
-        iUserOperations = new IUserOperationsImpl();
+        userDAO = new UserDAOImpl();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class UsersServlet extends HttpServlet{
         req.setCharacterEncoding("UTF-8");
         if (req.getParameter("operation").equals("delete") ) {
             id = Integer.parseInt(req.getParameter("id"));
-            iUserOperations.delete(id);
+            userDAO.delete(id);
             resp.sendRedirect("/MyServlet");
         }
 
@@ -51,7 +49,7 @@ public class UsersServlet extends HttpServlet{
             name = req.getParameter("name");
             lastName = req.getParameter("lastName");
             password = req.getParameter("password");
-            iUserOperations.create(new User(name, lastName, password));
+            userDAO.create(new User(name, lastName, password));
 
             resp.sendRedirect("/MyServlet");
         }
@@ -64,7 +62,7 @@ public class UsersServlet extends HttpServlet{
 
             String persistedUserName = getPersistedUserName();
             User user = new User(id, name, lastName, password);
-            iUserOperations.update(user);
+            userDAO.update(user);
 
             String sName = (String) req.getSession().getAttribute("sName");
             if (persistedUserName.equals(sName)) {
@@ -76,7 +74,7 @@ public class UsersServlet extends HttpServlet{
     }
 
     private String getPersistedUserName() {
-        User persistedUser = iUserOperations.findById(id);
+        User persistedUser = userDAO.findById(id);
         return persistedUser.getName();
     }
 }

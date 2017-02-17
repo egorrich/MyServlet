@@ -1,8 +1,8 @@
 package controller;
 
 import model.User;
-import services.IUserOperations;
-import services.IUserOperationsImpl;
+import services.UserDAO;
+import services.UserDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ public class Login extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        IUserOperations operations = new IUserOperationsImpl();
+        UserDAO operations = new UserDAOImpl();
         try {
             String name = req.getParameter("name");
             String password = req.getParameter("password");
@@ -29,7 +29,7 @@ public class Login extends HttpServlet{
             if (user.getPassword().equals(password)) {
                 req.getSession().setAttribute("sName", name);
                 req.getSession().setAttribute("sPassword", password);
-                resp.sendRedirect("/MyServlet");
+                resp.sendRedirect("/home.jsp");
             }
             else {
                 resp.sendRedirect("/login.jsp");
