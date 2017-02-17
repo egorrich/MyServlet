@@ -3,14 +3,16 @@
 <html>
 <head>
     <title>Users</title>
+   <%-- <link href="css/bootstrap.css" type="text/css" rel="stylesheet">--%>
 </head>
 <body>
-
-<div style="text-align: right">Hello, ${sName}
+<%@include file="header.jsp"%>
+<%@include file="footer.jsp"%>
+<%--<div style="text-align: right">Hello, ${sName}
     <form action="/logout" method="post">
         <input type="submit" value="Log Out">
     </form>
-</div>
+</div>--%>
 <c:if test="${param.id == null}">
 <form action="/users" method="post">
     <input type="text" name="name" placeholder="Enter Name">
@@ -34,6 +36,6 @@
     <input type="submit" value="Update User">
 </form>
 </c:if>
-<a href="http://localhost:8080/home.jsp">BACK</a>
+<a  href="http://localhost:8080/home.jsp"><span class="glyphicon glyphicon-arrow-left"></span> BACK</a>
 </body>
 </html>

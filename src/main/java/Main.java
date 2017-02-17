@@ -10,6 +10,5 @@ public class Main {
         System.out.println(userDAO.findByName("Egor"));
        // userDAO.delete(3);
        // userDAO.create(new User("Egor", "Ivanov"));
-        //test commit
     }
 }
