@@ -1,15 +1,15 @@
-import services.IUserOperations;
-import services.IUserOperationsImpl;
+import services.UserDAO;
+import services.UserDAOImpl;
 
 /**
  * Created by egor on 13.2.17.
  */
 public class Main {
     public static void main(String[] args) {
-        IUserOperations iUserOperations = new IUserOperationsImpl();
-        System.out.println(iUserOperations.findByName("Egor"));
-       // iUserOperations.delete(3);
-       // iUserOperations.create(new User("Egor", "Ivanov"));
+        UserDAO userDAO = new UserDAOImpl();
+        System.out.println(userDAO.findByName("Egor"));
+       // userDAO.delete(3);
+       // userDAO.create(new User("Egor", "Ivanov"));
 
     }
 }
