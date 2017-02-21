@@ -5,6 +5,7 @@
         String redirectURL = "/login.jsp";
         response.sendRedirect(redirectURL);
     }
+    session.setAttribute("user", null);
 %>
 <%@include file="header.jsp"%>
 <%@include file="footer.jsp"%>
@@ -57,8 +58,7 @@
                     <td> ${items.lastName}</td>
                     <td> ${items.password}</td>
                     <td>
-                       <%-- <a href="/users.jsp?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>--%>
-                           <a href="/users?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>
+                        <a href="/users?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">Edit</a>
                     </td>
                     <td><form action="/users">
                         <input type="submit" value="delete">
@@ -69,9 +69,10 @@
             </c:forEach>
             </tbody>
          </table>
-            <form action="/users.jsp">
+            <%--<form action="/users.jsp">
                 <input type="submit" value="create">
-            </form>
+            </form>--%>
+            <a href="/users.jsp" class="btn btn-large btn-primary">Create</a>
         </c:if>
 
 

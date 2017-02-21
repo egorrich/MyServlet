@@ -2,7 +2,7 @@ package controller;
 
 import model.User;
 import services.UserDAO;
-import services.UserDAOImpl;
+import services.UserDAOHibernateImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +20,12 @@ public class Login extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UserDAO operations = new UserDAOImpl();
+        UserDAO userDAO = new UserDAOHibernateImpl();
+
         try {
             String name = req.getParameter("name");
             String password = req.getParameter("password");
-            User user = operations.findByName(name);
+            User user = userDAO.findByName(name);
             System.out.println(user);
             if (user.getPassword().equals(password)) {
                 req.getSession().setAttribute("sName", name);

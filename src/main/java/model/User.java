@@ -1,14 +1,25 @@
 package model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by egor on 9.2.17.
- */
+@Entity
+@Table(name = "users")
 public class User implements Serializable, Comparable<User>{
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    @OrderBy
+    private long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "password")
     private String password;
 
     public User() {
@@ -21,24 +32,24 @@ public class User implements Serializable, Comparable<User>{
         this.password = password;
     }
 
-    public User(int id, String name, String lastName) {
+    public User(long id, String name, String lastName) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
     }
 
-    public User(int id, String name, String lastName, String password) {
+    public User(long id, String name, String lastName, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.password = password;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -74,6 +85,6 @@ public class User implements Serializable, Comparable<User>{
 
 
     public int compareTo(User user) {
-        return getId() - user.getId();
+        return (int) (getId() - user.getId());
     }
 }

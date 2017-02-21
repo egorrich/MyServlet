@@ -2,7 +2,7 @@ package controller;
 
 import model.User;
 import services.UserDAO;
-import services.UserDAOImpl;
+import services.UserDAOHibernateImpl;
 import utils.SessionValidator;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class MyServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userDAO = new UserDAOImpl();
+        userDAO = new UserDAOHibernateImpl();
     }
 
 

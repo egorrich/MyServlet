@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setInt(4, user.getId());
+            preparedStatement.setLong(4, user.getId());
             preparedStatement.execute();
             System.out.println("User updated successfully");
         } catch (SQLException e) {
@@ -164,12 +164,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(long id) {
         connection = ConnectionManager.getConnection();
         User user = new User();
         try {
             preparedStatement = connection.prepareStatement(Queries.FIND_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("name");

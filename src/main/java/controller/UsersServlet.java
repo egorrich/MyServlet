@@ -2,7 +2,7 @@ package controller;
 
 import model.User;
 import services.UserDAO;
-import services.UserDAOImpl;
+import services.UserDAOHibernateImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ public class UsersServlet extends HttpServlet{
 
     private final String TABLE_NAME = "Users";
 
-    UserDAO userDAO;
+    private UserDAO userDAO;
     private String name;
     private String lastName;
     private int id;
@@ -28,7 +28,7 @@ public class UsersServlet extends HttpServlet{
 
     @Override
     public void init() throws ServletException {
-        userDAO = new UserDAOImpl();
+        userDAO = new UserDAOHibernateImpl();
     }
 
     @Override
@@ -81,23 +81,6 @@ public class UsersServlet extends HttpServlet{
             resp.sendRedirect("/MyServlet");
         }
 
-        /*if (req.getParameter("operation").equals("update") ) {
-            id = Integer.parseInt(req.getParameter("id"));
-            name = req.getParameter("name");
-            lastName = req.getParameter("lastName");
-            password = req.getParameter("password");
-
-            String persistedUserName = getPersistedUserName();
-            User user = new User(id, name, lastName, password);
-            userDAO.update(user);
-
-            String sName = (String) req.getSession().getAttribute("sName");
-            if (persistedUserName.equals(sName)) {
-                req.getSession().setAttribute("sName", name);
-            }
-
-            resp.sendRedirect("/MyServlet");
-        }*/
     }
 
     private String getPersistedUserName() {
