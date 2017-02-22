@@ -1,6 +1,8 @@
 package services;
 
 import model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.ConnectionManager;
 
 import java.sql.*;
@@ -13,6 +15,8 @@ import java.util.List;
  * @author egor
  */
 public class UserDAOImpl implements UserDAO {
+
+    static final Logger log = LoggerFactory.getLogger(UserDAOImpl.class.getName());
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -30,17 +34,21 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void create(User user) {
         connection = ConnectionManager.getConnection();
-        try {
-            preparedStatement = connection.prepareStatement(Queries.CREATE);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.execute();
-            //TODO: replace sout with logback or log4j
-            System.out.println("User added successfully");
-        } catch (SQLException e) {
-            //TODO: replace e.printStackTrace() with logback or log4j
-            e.printStackTrace();
+        if (user != null) {
+            try {
+                preparedStatement = connection.prepareStatement(Queries.CREATE);
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getLastName());
+                preparedStatement.setString(3, user.getPassword());
+                preparedStatement.execute();
+                //TODO: replace sout with logback or log4j
+                log.info("User is added successfully");
+            } catch (SQLException e) {
+                //TODO: replace e.printStackTrace() with logback or log4j
+                log.error("Failed to connect database: ", e);
+            }
+        } else {
+            log.info("Failed to Create User. User must be not NULL");
         }
     }
 
@@ -54,9 +62,9 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setLong(4, user.getId());
             preparedStatement.execute();
-            System.out.println("User updated successfully");
+            log.info("User updated successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Failed to connect database: ", e);
         }
     }
 
@@ -67,17 +75,15 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement = connection.prepareStatement(Queries.DELETE);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
-            System.out.println("User with id = " + id + " is deleted successfully");
-
+            log.info("User with id = " + id + " is deleted successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Failed to connect database: ", e);
         }
     }
 
     @Override
     public List<User> findAll() {
         Statement st = null;
-        List<User> users = new ArrayList<>();
         try {
             st = ConnectionManager.getConnection().createStatement();
             rs = st.executeQuery(Queries.FIND_BY_NUMBER);
@@ -86,20 +92,21 @@ public class UserDAOImpl implements UserDAO {
                 String name = rs.getString("name");
                 String lastname = rs.getString("last_name");
                 String password = rs.getString("password");
+                List<User> users = new ArrayList<>();
                 users.add(new User(id, name, lastname, password));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Failed to connect database: ", e);
         } finally {
             if (st != null) {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    log.error("Failed to connect database: ", e);
                 }
             }
         }
-        return users;
+        return null;
     }
 
     @Override
@@ -121,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
                 return user;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Failed to connect database: ", e);
         }
         return null;
     }
@@ -129,27 +136,24 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findById(long id) {
         connection = ConnectionManager.getConnection();
-        User user = new User();
         try {
             preparedStatement = connection.prepareStatement(Queries.FIND_BY_ID);
             preparedStatement.setLong(1, id);
             rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 String name = rs.getString("name");
                 String lastname = rs.getString("last_name");
                 String password = rs.getString("password");
+                User user = new User();
                 user.setId(id);
                 user.setName(name);
                 user.setLastName(lastname);
                 user.setPassword(password);
+                return user;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO: replace NPE with validate check in code
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("User " + id + " is not found");
+            log.error("Failed to connect database: ", e);
         }
-        return user;
+        return null;
     }
 }

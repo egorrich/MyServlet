@@ -1,8 +1,5 @@
-import model.User;
 import services.UserDAO;
-import services.UserDAOHibernateImpl;
-
-import java.util.List;
+import services.UserDAOImpl;
 
 /**
  * Create on 13.2.17.
@@ -11,8 +8,10 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-       UserDAO userDAO = new UserDAOHibernateImpl();
-        List<User> users = userDAO.findAll();
-        System.out.println(users);
+       UserDAO userDAO = new UserDAOImpl();
+      // userDAO.create(new User("esdf", "fsd", "sf2"));
+        userDAO.create(null);
+        userDAO.delete(77);
+
     }
 }

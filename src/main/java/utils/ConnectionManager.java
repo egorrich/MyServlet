@@ -1,5 +1,8 @@
 package utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +13,7 @@ import java.sql.SQLException;
  * @author egor
  */
 public class ConnectionManager {
+    static final Logger log = LoggerFactory.getLogger(ConnectionManager.class.getName());
 
     private static final String DRIVER = "org.postgresql.Driver";
 
@@ -24,11 +28,14 @@ public class ConnectionManager {
         Connection conn = null;
         try {
             Class.forName(DRIVER);
-            System.out.println("Driver is loaded");
+            log.info("Driver is loaded");
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Connected succesfully");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            log.info("Connected succesfully");
+        }catch (ClassNotFoundException e) {
+            log.error("Can't find driver: " + e);
+        }
+        catch (SQLException e) {
+            log.error("Can't connect to database: " + e);
         }
         return conn;
     }

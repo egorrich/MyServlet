@@ -54,8 +54,8 @@ public class UsersServlet extends HttpServlet {
                     req.getSession().setAttribute("sName", name);
                 }
 
-                //resp.sendRedirect("/MyServlet");
-                req.getRequestDispatcher("/MyServlet").forward(req, resp);
+                //resp.sendRedirect("/HomeServlet");
+                req.getRequestDispatcher("/HomeServlet").forward(req, resp);
             }
 
         }
@@ -63,7 +63,7 @@ public class UsersServlet extends HttpServlet {
         if (!(req.getParameter("operation") == null) && req.getParameter("operation").equals("delete")) {
             id = Integer.parseInt(req.getParameter("id"));
             userDAO.delete(id);
-            resp.sendRedirect("/MyServlet");
+            resp.sendRedirect("/HomeServlet");
         }
 
 
@@ -77,7 +77,7 @@ public class UsersServlet extends HttpServlet {
             password = req.getParameter("password");
             userDAO.create(new User(name, lastName, password));
 
-            resp.sendRedirect("/MyServlet");
+            resp.sendRedirect("/HomeServlet");
         }
 
     }

@@ -14,9 +14,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-//TODO: rename to /Home servlet
-@WebServlet("/MyServlet")
-public class MyServlet extends HttpServlet {
+@WebServlet("/HomeServlet")
+public class HomeServlet extends HttpServlet {
 
     private final static String TABLE_NAME = "Users";
 
