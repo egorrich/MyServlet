@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable, Comparable<User>{
+public class User implements Serializable, Comparable<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

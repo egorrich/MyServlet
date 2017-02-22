@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by egor on 10.2.17.
+ * Create on 10.2.17.
+ *
+ * @author egor
  */
 
 @WebServlet("/users")
-public class UsersServlet extends HttpServlet{
-
-    private final String TABLE_NAME = "Users";
+public class UsersServlet extends HttpServlet {
 
     private UserDAO userDAO;
     private String name;
@@ -35,7 +35,7 @@ public class UsersServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String operation = req.getParameter("operation");
-        if ((operation == null) || (operation.equals("update")) ) {
+        if ((operation == null) || (operation.equals("update"))) {
             id = Integer.parseInt(req.getParameter("id"));
             name = req.getParameter("name");
             lastName = req.getParameter("lastName");
@@ -44,8 +44,7 @@ public class UsersServlet extends HttpServlet{
                 User user = new User(id, name, lastName, password);
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect("/users.jsp");
-            }
-            else {
+            } else {
                 String persistedUserName = getPersistedUserName();
                 User user = new User(id, name, lastName, password);
                 userDAO.update(user);
@@ -61,7 +60,7 @@ public class UsersServlet extends HttpServlet{
 
         }
 
-        if (!(req.getParameter("operation") == null) && req.getParameter("operation").equals("delete") ) {
+        if (!(req.getParameter("operation") == null) && req.getParameter("operation").equals("delete")) {
             id = Integer.parseInt(req.getParameter("id"));
             userDAO.delete(id);
             resp.sendRedirect("/MyServlet");
@@ -72,7 +71,7 @@ public class UsersServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("operation").equals("create") ) {
+        if (req.getParameter("operation").equals("create")) {
             name = req.getParameter("name");
             lastName = req.getParameter("lastName");
             password = req.getParameter("password");

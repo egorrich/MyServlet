@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by egor on 15.2.17.
+ * Create on 15.2.17.
+
+ * @author egor
  */
 @WebServlet("/logout")
 public class Logout extends HttpServlet{
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("sName", null);

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by egor on 9.2.17.
+ * Create on 9.2.17.
+ *
+ * @author egor
  */
 public class UserDAOImpl implements UserDAO {
 
@@ -16,14 +18,13 @@ public class UserDAOImpl implements UserDAO {
     private PreparedStatement preparedStatement;
     private ResultSet rs;
 
-    private static class Queries{
-        private static final String CREATE = "INSERT INTO users (name, last_name, password) VALUES (?, ? , ?)";
-        private static final String UPDATE = "UPDATE users SET name = ?, last_name = ?, password = ? WHERE id = ?";
-        private static final String DELETE = "DELETE FROM users WHERE id = ?";
-        private static final String FIND_BY_NUMBER = "SELECT ALL * FROM users";
-        public static final String FIND_BY_NAME = "SELECT * FROM users WHERE name = ?";
-        public static final String FIND_BY_ID = "Select * FROM users WHERE id = ?";
-
+    private static class Queries {
+        static final String CREATE = "INSERT INTO users (name, last_name, password) VALUES (?, ? , ?)";
+        static final String UPDATE = "UPDATE users SET name = ?, last_name = ?, password = ? WHERE id = ?";
+        static final String DELETE = "DELETE FROM users WHERE id = ?";
+        static final String FIND_BY_NUMBER = "SELECT ALL * FROM users";
+        static final String FIND_BY_NAME = "SELECT * FROM users WHERE name = ?";
+        static final String FIND_BY_ID = "Select * FROM users WHERE id = ?";
     }
 
     @Override
@@ -35,8 +36,10 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.execute();
+            //TODO: replace sout with logback or log4j
             System.out.println("User added successfully");
         } catch (SQLException e) {
+            //TODO: replace e.printStackTrace() with logback or log4j
             e.printStackTrace();
         }
     }
@@ -55,8 +58,8 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
     @Override
     public void delete(long id) {
         connection = ConnectionManager.getConnection();
@@ -69,43 +72,6 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    @Override
-    public List<User> findAll(int number) {
-        Statement st = null;
-        List<User> users = new ArrayList<>();
-        try {
-            st = ConnectionManager.getConnection().createStatement();
-            rs = st.executeQuery(Queries.FIND_BY_NUMBER);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String lastname = rs.getString("last_name");
-                String password = rs.getString("password");
-                users.add(new User(id, name, lastname, password));
-            }
-            if (users.size() < number) {
-                return users;
-            }
-            if (users.size() > number) {
-                users = users.subList(0, number);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (st != null) {
-                try {
-                    st.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return users;
     }
 
     @Override
@@ -120,12 +86,11 @@ public class UserDAOImpl implements UserDAO {
                 String name = rs.getString("name");
                 String lastname = rs.getString("last_name");
                 String password = rs.getString("password");
-                users.add(new User(id,name, lastname, password));
+                users.add(new User(id, name, lastname, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (st != null) {
                 try {
                     st.close();
@@ -140,27 +105,25 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findByName(String name) {
         connection = ConnectionManager.getConnection();
-        User user = new User();
         try {
             preparedStatement = connection.prepareStatement(Queries.FIND_BY_NAME);
-            preparedStatement.setString(1,name);
+            preparedStatement.setString(1, name);
             rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
                 String lastname = rs.getString("last_name");
                 String password = rs.getString("password");
+                User user = new User();
                 user.setId(id);
                 user.setName(name);
                 user.setLastName(lastname);
                 user.setPassword(password);
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("User " + name + " is not found");
         }
-        return user;
+        return null;
     }
 
     @Override
@@ -182,6 +145,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            //TODO: replace NPE with validate check in code
         } catch (NullPointerException e) {
             e.printStackTrace();
             System.out.println("User " + id + " is not found");

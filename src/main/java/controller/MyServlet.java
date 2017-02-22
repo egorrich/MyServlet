@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+//TODO: rename to /Home servlet
 @WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
 
@@ -26,21 +27,18 @@ public class MyServlet extends HttpServlet {
         userDAO = new UserDAOHibernateImpl();
     }
 
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         printUsers(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         printUsers(req, resp);
     }
 
     private void printUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(SessionValidator.validate((String) req.getSession().getAttribute("sName"),
+        if (SessionValidator.validate((String) req.getSession().getAttribute("sName"),
                 (String) req.getSession().getAttribute("sPassword"))) {
             resp.setContentType("text/html");
             resp.setCharacterEncoding("UTF-8");
@@ -49,8 +47,7 @@ public class MyServlet extends HttpServlet {
             req.getSession().setAttribute("list", list);
             req.getSession().setAttribute("TableName", TABLE_NAME);
             req.getRequestDispatcher("/home.jsp").forward(req, resp);
-        }
-        else {
+        } else {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }

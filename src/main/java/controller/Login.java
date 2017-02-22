@@ -12,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by egor on 14.2.17.
+ * Create on 14.2.17.
+ *
+ * @author egor
  */
 @WebServlet("/login")
-public class Login extends HttpServlet{
+public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         UserDAO userDAO = new UserDAOHibernateImpl();
 
         try {
@@ -32,8 +33,7 @@ public class Login extends HttpServlet{
                 req.getSession().setAttribute("sPassword", password);
                 req.getSession().setAttribute("list", null);
                 resp.sendRedirect("/home.jsp");
-            }
-            else {
+            } else {
                 resp.sendRedirect("/login.jsp");
             }
         } catch (NullPointerException e) {

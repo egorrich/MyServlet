@@ -1,9 +1,13 @@
 package utils;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
- * Created by egor on 8.2.17.
+ * Create on 8.2.17.
+
+ * @author egor
  */
 public class ConnectionManager {
 

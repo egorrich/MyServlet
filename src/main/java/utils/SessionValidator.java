@@ -1,16 +1,13 @@
 package utils;
 
 /**
- * Created by egor on 15.2.17.
+ * Create on 15.2.17.
+
+ * @author egor
  */
 public class SessionValidator {
 
     public static Boolean validate(String name, String password) {
-        Boolean result = false;
-        if ((name != null) && (password != null)) {
-            result = true;
-        }
-        return result;
+        return name != null && password != null;
     }
-
 }

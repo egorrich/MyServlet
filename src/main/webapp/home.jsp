@@ -7,6 +7,7 @@
     }
     session.setAttribute("user", null);
 %>
+<%--TODO: fix hedaer and footer content (remove html, head, body tags)--%>
 <%@include file="header.jsp"%>
 <%@include file="footer.jsp"%>
 <html>
@@ -19,6 +20,7 @@
             padding-top: 70px;
             padding-bottom: 70px;
         }
+        /*TODO: delete if not used */
         table1 {
             width: 100px; /* ширина */
             padding: 20px; /* отступы внутри */

@@ -8,15 +8,15 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Created by egor on 21.02.17.
+ * Create on 21.02.17.
+ *
+ * @author egor
  */
-public class UserDAOHibernateImpl implements UserDAO{
-
-    private Session session;
+public class UserDAOHibernateImpl implements UserDAO {
 
     @Override
     public void create(User user) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.save(user);
@@ -27,12 +27,11 @@ public class UserDAOHibernateImpl implements UserDAO{
         } finally {
             HibernateUtil.close(session);
         }
-
     }
 
     @Override
     public void update(User user) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.saveOrUpdate(user);
@@ -43,15 +42,14 @@ public class UserDAOHibernateImpl implements UserDAO{
         } finally {
             HibernateUtil.close(session);
         }
-
     }
 
     @Override
     public void delete(long id) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            User user = (User)session.load(User.class, id);
+            User user = session.load(User.class, id);
             session.delete(user);
             System.out.println("User with User ID = " + id + " is deleted");
             session.getTransaction().commit();
@@ -63,19 +61,13 @@ public class UserDAOHibernateImpl implements UserDAO{
     }
 
     @Override
-    public List<User> findAll(int number) {
-        return null;
-    }
-
-    @Override
     public List<User> findAll() {
-        session = HibernateUtil.getSessionFactory().openSession();
-        List<User> users = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<User> users;
         try {
             session.beginTransaction();
             Query query = session.createQuery("from User ");
             users = query.getResultList();
-
         } finally {
             HibernateUtil.close(session);
         }
@@ -85,14 +77,13 @@ public class UserDAOHibernateImpl implements UserDAO{
     @Override
     public User findByName(String name) {
         User user = null;
-
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             String queryString = "from User where name = :name";
             Query query = session.createQuery(queryString);
             query.setParameter("name", name);
-            user = (User)query.getSingleResult();
+            user = (User) query.getSingleResult();
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -105,22 +96,15 @@ public class UserDAOHibernateImpl implements UserDAO{
     @Override
     public User findById(long id) {
         Session session = null;
-        User user = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            user = (User)session.get(User.class, id);
-           // Hibernate.initialize(user);
+            return session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             HibernateUtil.close(session);
         }
-        return user;
+        return null;
     }
 
-    /*private void close(Session session) {
-        if (session != null && session.isOpen()) {
-            session.close();
-        }
-    }*/
 }
