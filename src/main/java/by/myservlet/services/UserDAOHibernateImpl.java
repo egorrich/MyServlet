@@ -1,9 +1,9 @@
-package services;
+package by.myservlet.services;
 
-import model.User;
+import by.myservlet.model.User;
+import by.myservlet.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import utils.HibernateUtil;
 
 import javax.persistence.Query;
 import java.util.List;

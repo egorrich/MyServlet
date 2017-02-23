@@ -1,8 +1,8 @@
-package controller;
+package by.myservlet.controller;
 
-import model.User;
-import services.UserDAO;
-import services.UserDAOHibernateImpl;
+import by.myservlet.model.User;
+import by.myservlet.services.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +19,16 @@ import java.io.IOException;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 
+    private final UserDAO userDAO;
+
+    @Autowired
+    public Login(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO userDAO = new UserDAOHibernateImpl();
-
         try {
             String name = req.getParameter("name");
             String password = req.getParameter("password");

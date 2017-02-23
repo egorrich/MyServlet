@@ -5,13 +5,13 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-    <bean id="user" class="model.User">
+    <bean id="user" class="by.myservlet.model.User">
         <constructor-arg value="Ivan"/>
         <constructor-arg value="Drago"/>
         <constructor-arg value="sdsdf"/>
     </bean>
 
-    <bean id="userDAO" class="services.UserDAOHibernateImpl" />
+    <bean id="userDAO" class="by.myservlet.services.UserDAOHibernateImpl" />
 
     <bean id="Main" class="Main">
         <constructor-arg ref="user"/>

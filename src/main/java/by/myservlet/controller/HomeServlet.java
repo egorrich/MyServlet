@@ -1,9 +1,9 @@
-package controller;
+package by.myservlet.controller;
 
-import model.User;
-import services.UserDAO;
-import services.UserDAOHibernateImpl;
-import utils.SessionValidator;
+import by.myservlet.model.User;
+import by.myservlet.services.UserDAOHibernateImpl;
+import by.myservlet.utils.SessionValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +19,11 @@ public class HomeServlet extends HttpServlet {
 
     private final static String TABLE_NAME = "Users";
 
-    private UserDAO userDAO;
+    @Autowired
+    private UserDAOHibernateImpl userDAO;
 
     @Override
     public void init() throws ServletException {
-        userDAO = new UserDAOHibernateImpl();
     }
 
     @Override

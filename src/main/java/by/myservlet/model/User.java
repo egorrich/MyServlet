@@ -1,4 +1,4 @@
-package model;
+package by.myservlet.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

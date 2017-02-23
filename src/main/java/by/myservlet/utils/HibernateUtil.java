@@ -1,4 +1,4 @@
-package utils;
+package by.myservlet.utils;
 
 
 import org.hibernate.Session;

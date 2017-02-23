@@ -1,6 +1,7 @@
-import model.User;
+package by.myservlet;
+import by.myservlet.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import services.UserDAO;
+import by.myservlet.services.UserDAO;
 
 /**
  * Create on 13.2.17.

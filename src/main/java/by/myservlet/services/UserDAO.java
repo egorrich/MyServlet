@@ -1,6 +1,6 @@
-package services;
+package by.myservlet.services;
 
-import model.User;
+import by.myservlet.model.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package utils;
+package by.myservlet.utils;
 
 /**
  * Create on 15.2.17.

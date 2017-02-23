@@ -1,8 +1,8 @@
-package controller;
+package by.myservlet.controller;
 
-import model.User;
-import services.UserDAO;
-import services.UserDAOHibernateImpl;
+import by.myservlet.model.User;
+import by.myservlet.services.UserDAO;
+import by.myservlet.services.UserDAOHibernateImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
