@@ -2,6 +2,7 @@ package services;
 
 import model.User;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import javax.persistence.Query;
@@ -12,6 +13,7 @@ import java.util.List;
  *
  * @author egor
  */
+@Repository
 public class UserDAOHibernateImpl implements UserDAO {
 
     @Override

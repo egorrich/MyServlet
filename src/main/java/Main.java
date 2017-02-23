@@ -1,5 +1,6 @@
+import model.User;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.UserDAO;
-import services.UserDAOImpl;
 
 /**
  * Create on 13.2.17.
@@ -7,11 +8,27 @@ import services.UserDAOImpl;
  * @author egor
  */
 public class Main {
-    public static void main(String[] args) {
-       UserDAO userDAO = new UserDAOImpl();
-      // userDAO.create(new User("esdf", "fsd", "sf2"));
-        userDAO.create(null);
-        userDAO.delete(77);
 
+    User user;
+
+    UserDAO userDAO;
+
+    public static void main(String[] args) {
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+
+        Main main = (Main) context.getBean("Main");
+
+        main.userDAO.create((User) context.getBean("user"));
+        //userDAO.create(user);
+
+    }
+
+    public Main() {
+    }
+
+    public Main(User user, UserDAO userDAO) {
+        this.user = user;
+        this.userDAO = userDAO;
     }
 }
