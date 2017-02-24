@@ -1,5 +1,7 @@
 package by.myservlet.controller;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,8 @@ import java.io.IOException;
  * @author egor
  */
 @WebServlet("/logout")
-public class Logout extends HttpServlet{
+@Component
+public class Logout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

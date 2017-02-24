@@ -4,6 +4,7 @@ import by.myservlet.model.User;
 import by.myservlet.utils.ConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author egor
  */
-
+@Repository
 public class UserDAOImpl implements UserDAO {
 
     static final Logger log = LoggerFactory.getLogger(UserDAOImpl.class.getName());

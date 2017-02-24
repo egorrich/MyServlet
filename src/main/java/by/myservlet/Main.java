@@ -1,7 +1,8 @@
 package by.myservlet;
+
 import by.myservlet.model.User;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import by.myservlet.services.UserDAO;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Create on 13.2.17.
@@ -16,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/spring.xml");
 
         Main main = (Main) context.getBean("Main");
 

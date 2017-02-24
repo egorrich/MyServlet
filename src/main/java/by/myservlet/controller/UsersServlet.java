@@ -2,7 +2,9 @@ package by.myservlet.controller;
 
 import by.myservlet.model.User;
 import by.myservlet.services.UserDAO;
-import by.myservlet.services.UserDAOHibernateImpl;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +20,13 @@ import java.io.IOException;
  */
 
 @WebServlet("/users")
+@Component
 public class UsersServlet extends HttpServlet {
 
+    /*@Autowired
+    @Qualifier(value = "userDAOImpl")*/
     private UserDAO userDAO;
+
     private String name;
     private String lastName;
     private int id;
@@ -28,7 +34,8 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userDAO = new UserDAOHibernateImpl();
+        WebApplicationContext context = WebApplicationContextUtils.findWebApplicationContext(getServletContext());
+        userDAO = (UserDAO) context.getBean("userDAOHibernateImpl");
     }
 
     @Override
