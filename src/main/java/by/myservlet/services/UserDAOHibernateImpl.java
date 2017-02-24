@@ -1,8 +1,10 @@
 package by.myservlet.services;
 
 import by.myservlet.model.User;
-import by.myservlet.utils.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -14,11 +16,20 @@ import java.util.List;
  * @author egor
  */
 @Repository
+
 public class UserDAOHibernateImpl implements UserDAO {
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void create(User user) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
         try {
             session.beginTransaction();
             session.save(user);
@@ -27,13 +38,20 @@ public class UserDAOHibernateImpl implements UserDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     @Override
     public void update(User user) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
         try {
             session.beginTransaction();
             session.saveOrUpdate(user);
@@ -42,13 +60,20 @@ public class UserDAOHibernateImpl implements UserDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     @Override
     public void delete(long id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
         try {
             session.beginTransaction();
             User user = session.load(User.class, id);
@@ -58,20 +83,29 @@ public class UserDAOHibernateImpl implements UserDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     @Override
     public List<User> findAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
         List<User> users;
         try {
             session.beginTransaction();
             Query query = session.createQuery("from User ");
             users = query.getResultList();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
         return users;
     }
@@ -79,7 +113,12 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User findByName(String name) {
         User user = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session;
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
         try {
             session.beginTransaction();
             String queryString = "from User where name = :name";
@@ -90,23 +129,30 @@ public class UserDAOHibernateImpl implements UserDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
         return user;
     }
 
     @Override
     public User findById(long id) {
-        Session session = null;
+        Session session;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
+        try {
             return session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.close(session);
+            if (session != null) {
+                session.close();
+            }
         }
         return null;
     }
-
 }
