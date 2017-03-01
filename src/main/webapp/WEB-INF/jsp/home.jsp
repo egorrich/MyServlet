@@ -1,12 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--<%
     if (session.getAttribute("sName") == null) {
         String redirectURL = "/login.jsp";
         response.sendRedirect(redirectURL);
     }
     session.setAttribute("user", null);
-%>
+%>--%> <% //TODO: session is null. fix it %>
 <html>
 <head>
     <%@include file="header.jsp" %>

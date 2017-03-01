@@ -1,30 +1,51 @@
-/*
 package by.myservlet.controller;
 
 import by.myservlet.model.User;
 import by.myservlet.services.UserDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-*/
 /**
- * Create on 14.2.17.
+ * Create on 01.03.17.
  *
  * @author egor
- *//*
+ */
+@Controller
+@RequestMapping(value = "/LoginForm")
+public class LoginController {
 
-@WebServlet("/login")
-@Component
+    Logger log = LoggerFactory.getLogger(LoginController.class.getName());
+
+    @Autowired
+    UserDAO userDAO;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String showLoginPage() {
+        return "login";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String doLogin(@RequestParam("name") String name, @RequestParam("password") String password, Model model) {
+        User user = userDAO.findByName(name);
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                log.info("User logged in: " + user);
+                model.addAttribute("sName", name);
+                model.addAttribute("sPassword", password);
+                model.addAttribute("list", null);
+                return "home";
+            }
+        }
+        return "login";
+    }
+}
+/**
 public class Login extends HttpServlet {
 
     Logger log = LoggerFactory.getLogger(Login.class.getName());
@@ -56,6 +77,4 @@ public class Login extends HttpServlet {
             e.printStackTrace();
             resp.sendRedirect("/login.jsp");
         }
-    }
-}
-*/
+    }*/

@@ -20,7 +20,7 @@ import java.util.List;
  * @author egor
  */
 @Controller
-@RequestMapping("/HomerController")
+@RequestMapping(value = "/HomeController")
 public class HomeController {
 
     private final static String TABLE_NAME = "Users";
@@ -35,7 +35,7 @@ public class HomeController {
 //
 //        return model;
 
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/")
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView printUsers(@RequestParam("sName") String sName, @RequestParam("sPassword") String sPassword, Model model) {
         if (SessionValidator.validate(sName, sPassword)) {
             List<User> list = userDAO.findAll();

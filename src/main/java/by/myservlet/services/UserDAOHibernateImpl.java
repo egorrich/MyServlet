@@ -101,6 +101,7 @@ public class UserDAOHibernateImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public User findByName(String name) {
         User user = null;
         Session session;
@@ -110,39 +111,25 @@ public class UserDAOHibernateImpl implements UserDAO {
             session = sessionFactory.openSession();
         }*/
         try {
-            session.beginTransaction();
             String queryString = "from User where name = :name";
             Query query = session.createQuery(queryString);
             query.setParameter("name", name);
             user = (User) query.getSingleResult();
-            session.getTransaction().commit();
         } catch (RuntimeException e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return user;
     }
 
+    @Transactional
     @Override
     public User findById(long id) {
         Session session;
         session = sessionFactory.getCurrentSession();
-        /*try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }*/
         try {
             return session.get(User.class, id);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return null;
     }

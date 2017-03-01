@@ -84,28 +84,28 @@
             <version>1.2</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>javax</groupId>-->
-            <!--<artifactId>javaee-web-api</artifactId>-->
-            <!--<version>6.0</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>tomcat</groupId>-->
-            <!--<artifactId>jasper-compiler</artifactId>-->
-            <!--<version>5.5.23</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>tomcat</groupId>-->
-            <!--<artifactId>jasper-runtime</artifactId>-->
-            <!--<version>5.5.23</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>tomcat</groupId>-->
-            <!--<artifactId>jasper-compiler-jdt</artifactId>-->
-            <!--<version>5.5.23</version>-->
-        <!--</dependency>-->
+       <!-- <dependency>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-compiler</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-runtime</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>tomcat</groupId>
+            <artifactId>jasper-compiler-jdt</artifactId>
+            <version>LATEST</version>
+        </dependency>-->
 
         <!--PostgreSQL-->
         <dependency>
