@@ -1,6 +1,7 @@
 package by.myservlet.utils;
 
 
+import by.myservlet.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -15,7 +16,7 @@ public class HibernateUtil {
 
     static {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            sessionFactory = new Configuration().addAnnotatedClass(User.class).buildSessionFactory();
         } catch (Throwable ex) {
             log.error("Initial SessionFactory creation failed: ", ex);
             throw new ExceptionInInitializerError(ex);

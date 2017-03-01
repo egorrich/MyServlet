@@ -2,6 +2,8 @@ package by.myservlet.controller;
 
 import by.myservlet.model.User;
 import by.myservlet.services.UserDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -22,6 +24,8 @@ import java.io.IOException;
 @Component
 public class Login extends HttpServlet {
 
+    Logger log = LoggerFactory.getLogger(Login.class.getName());
+
     private UserDAO userDAO;
 
     @Override
@@ -36,7 +40,7 @@ public class Login extends HttpServlet {
             String name = req.getParameter("name");
             String password = req.getParameter("password");
             User user = userDAO.findByName(name);
-            System.out.println(user);
+            log.info("User logged in: " + user);
             if (user.getPassword().equals(password)) {
                 req.getSession().setAttribute("sName", name);
                 req.getSession().setAttribute("sPassword", password);

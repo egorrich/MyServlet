@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author egor
  */
-@Repository
+
 public class UserDAOImpl implements UserDAO {
 
     static final Logger log = LoggerFactory.getLogger(UserDAOImpl.class.getName());
@@ -43,10 +43,8 @@ public class UserDAOImpl implements UserDAO {
                 preparedStatement.setString(2, user.getLastName());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.execute();
-                //TODO: replace sout with logback or log4j
                 log.info("User is added successfully");
             } catch (SQLException e) {
-                //TODO: replace e.printStackTrace() with logback or log4j
                 log.error("Failed to connect database: ", e);
             }
         } else {

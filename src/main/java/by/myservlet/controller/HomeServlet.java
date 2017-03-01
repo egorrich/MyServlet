@@ -1,9 +1,13 @@
+/*
 package by.myservlet.controller;
 
 import by.myservlet.model.User;
 import by.myservlet.services.UserDAO;
 import by.myservlet.utils.SessionValidator;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -17,11 +21,10 @@ import java.util.Collections;
 import java.util.List;
 
 @WebServlet("/HomeServlet")
-@Component
+@Controller
 public class HomeServlet extends HttpServlet {
 
     private final static String TABLE_NAME = "Users";
-
 
     private UserDAO userDAO;
 
@@ -37,6 +40,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     @Override
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "/HomeSrvlet")
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         printUsers(req, resp);
     }
@@ -55,4 +59,4 @@ public class HomeServlet extends HttpServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
-}
+}*/

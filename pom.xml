@@ -33,6 +33,12 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.6.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>4.3.6.RELEASE</version>
         </dependency>
@@ -69,15 +75,37 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>javax</groupId>-->
+            <!--<artifactId>javaee-web-api</artifactId>-->
+            <!--<version>6.0</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>tomcat</groupId>-->
+            <!--<artifactId>jasper-compiler</artifactId>-->
+            <!--<version>5.5.23</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>tomcat</groupId>-->
+            <!--<artifactId>jasper-runtime</artifactId>-->
+            <!--<version>5.5.23</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>tomcat</groupId>-->
+            <!--<artifactId>jasper-compiler-jdt</artifactId>-->
+            <!--<version>5.5.23</version>-->
+        <!--</dependency>-->
 
         <!--PostgreSQL-->
         <dependency>
@@ -87,29 +115,12 @@
         </dependency>
 
         <!--WebApp-->
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>2.1.4</version>
         </dependency>
-
-       <!-- <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.2.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.webjars</groupId>
-                    <artifactId>jquery</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
 
         <!--Logging-->
         <dependency>

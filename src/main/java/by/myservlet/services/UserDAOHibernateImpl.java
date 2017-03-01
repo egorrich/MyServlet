@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -16,7 +18,6 @@ import java.util.List;
  * @author egor
  */
 @Repository
-
 public class UserDAOHibernateImpl implements UserDAO {
 
     @Autowired
@@ -25,11 +26,11 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public void create(User user) {
         Session session;
-        try {
+       // try {
             session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
+       /* } catch (HibernateException e) {
             session = sessionFactory.openSession();
-        }
+        }*/
         try {
             session.beginTransaction();
             session.save(user);
@@ -47,11 +48,12 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public void update(User user) {
         Session session;
-        try {
+        session = sessionFactory.getCurrentSession();
+        /*try {
             session = sessionFactory.getCurrentSession();
         } catch (HibernateException e) {
             session = sessionFactory.openSession();
-        }
+        }*/
         try {
             session.beginTransaction();
             session.saveOrUpdate(user);
@@ -69,11 +71,12 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public void delete(long id) {
         Session session;
-        try {
+        session = sessionFactory.getCurrentSession();
+        /*try {
             session = sessionFactory.getCurrentSession();
         } catch (HibernateException e) {
             session = sessionFactory.openSession();
-        }
+        }*/
         try {
             session.beginTransaction();
             User user = session.load(User.class, id);
@@ -90,35 +93,22 @@ public class UserDAOHibernateImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public List<User> findAll() {
-        Session session;
-        try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }
-        List<User> users;
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("from User ");
-            users = query.getResultList();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return users;
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User ");
+        return (List<User>) query.getResultList();
     }
 
     @Override
     public User findByName(String name) {
         User user = null;
         Session session;
-        try {
+  //      try {
             session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
+        /*} catch (HibernateException e) {
             session = sessionFactory.openSession();
-        }
+        }*/
         try {
             session.beginTransaction();
             String queryString = "from User where name = :name";
@@ -139,11 +129,12 @@ public class UserDAOHibernateImpl implements UserDAO {
     @Override
     public User findById(long id) {
         Session session;
-        try {
+        session = sessionFactory.getCurrentSession();
+        /*try {
             session = sessionFactory.getCurrentSession();
         } catch (HibernateException e) {
             session = sessionFactory.openSession();
-        }
+        }*/
         try {
             return session.get(User.class, id);
         } catch (Exception e) {

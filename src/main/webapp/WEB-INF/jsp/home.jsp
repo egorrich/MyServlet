@@ -66,7 +66,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="/users.jsp" class="btn btn-large btn-primary">Create</a>
+    <a href="/WEB-INF/jsp/users.jsp" class="btn btn-large btn-primary">Create</a>
 </c:if>
 
 </body>
