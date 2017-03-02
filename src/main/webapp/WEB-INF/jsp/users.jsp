@@ -12,12 +12,6 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-<%@include file="footer.jsp"%>
-<%--<div style="text-align: right">Hello, ${sName}
-    <form action="/logout" method="post">
-        <input type="submit" value="Log Out">
-    </form>
-</div>--%>
 <c:if test="${user == null}">
 <form action="/users" method="post">
     <input type="text" name="name" placeholder="Enter Name">
@@ -41,6 +35,9 @@
     <input type="submit" value="Update User">
 </form>
 </c:if>
-<a  href="http://localhost:8080/home.jsp"><span class="glyphicon glyphicon-arrow-left"></span> BACK</a>
+<form name="submitForm" method="GET" action="/homeController">
+    <A HREF="javascript:document.submitForm.submit()"><span class="glyphicon glyphicon-arrow-left"></span>BACK</A>
+</form>
+<%@include file="footer.jsp"%>
 </body>
 </html>

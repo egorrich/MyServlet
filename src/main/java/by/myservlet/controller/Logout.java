@@ -1,3 +1,4 @@
+/*
 package by.myservlet.controller;
 
 import org.springframework.stereotype.Component;
@@ -9,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+*/
 /**
  * Create on 15.2.17.
 
  * @author egor
- */
+ *//*
+
 @WebServlet("/logout")
 @Component
 public class Logout extends HttpServlet {
@@ -34,3 +37,4 @@ public class Logout extends HttpServlet {
         resp.sendRedirect("/login.jsp");
     }
 }
+*/

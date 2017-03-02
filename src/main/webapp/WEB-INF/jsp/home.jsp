@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--<%
     if (session.getAttribute("sName") == null) {
-        String redirectURL = "/login.jsp";
+        String redirectURL = "/login";
         response.sendRedirect(redirectURL);
     }
     session.setAttribute("user", null);
@@ -55,18 +55,16 @@
                     <a href="/users?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">edit</a>
                 </td>
                 <td>
-                    <%--<form action="/users">
-                        <input type="submit" value="delete">
-                        <input type="hidden" name="id" value="${items.id}">
-                        <input type="hidden" name="operation" value="delete">
-                    </form>--%>
-                    <a href="/users?id=${items.id}&operation=delete">delete</a>
+                    <a href="/users/${items.id}">delete</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a href="/WEB-INF/jsp/users.jsp" class="btn btn-large btn-primary">Create</a>
+ <%--   <a href="/users" class="btn btn-large btn-primary">Create</a>--%>
+    <form name="submitForm" method="POST" action="/users">
+        <A HREF="javascript:document.submitForm.submit()">Create</A>
+    </form>
 </c:if>
 
 </body>

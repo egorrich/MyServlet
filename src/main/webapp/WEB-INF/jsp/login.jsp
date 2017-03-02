@@ -12,7 +12,7 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-    <form action="/LoginForm" method="post">
+    <form action="/login" method="post">
         Login
         <input type="text" name="name" placeholder="Type Login">
         Password

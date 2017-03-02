@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="/WEB-INF/jsp/home.jspjsp/home.jsp">My Servlet</a>
+            <a class="navbar-brand" href="/homeController">My Servlet</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -15,7 +15,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                    role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/HomeServlet">Users</a></li>
+                    <li><a href="/homeController">Users</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">DoSmth</a></li>
                 </ul>
@@ -32,7 +32,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">Hello, ${sName}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/WEB-INF/jsp/login.jspsp/login.jsp">Change Account </a></li>
+                            <li><a href="/login">Change Account </a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
                         </ul>

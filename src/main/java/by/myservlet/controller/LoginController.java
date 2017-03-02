@@ -11,19 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Create on 01.03.17.
  *
  * @author egor
  */
 @Controller
-@RequestMapping(value = "/LoginForm")
+@RequestMapping(value = "/login")
 public class LoginController {
 
-    Logger log = LoggerFactory.getLogger(LoginController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class.getName());
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showLoginPage() {
@@ -31,50 +33,17 @@ public class LoginController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doLogin(@RequestParam("name") String name, @RequestParam("password") String password, Model model) {
+    public String doLogin(HttpSession session, @RequestParam("name") String name, @RequestParam("password") String password) {
         User user = userDAO.findByName(name);
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 log.info("User logged in: " + user);
-                model.addAttribute("sName", name);
-                model.addAttribute("sPassword", password);
-                model.addAttribute("list", null);
+                session.setAttribute("sName", name);
+                session.setAttribute("sPassword", password);
+                session.setAttribute("list", null);
                 return "home";
             }
         }
         return "login";
     }
 }
-/**
-public class Login extends HttpServlet {
-
-    Logger log = LoggerFactory.getLogger(Login.class.getName());
-
-    private UserDAO userDAO;
-
-    @Override
-    public void init() throws ServletException {
-        WebApplicationContext context = WebApplicationContextUtils.findWebApplicationContext(getServletContext());
-        userDAO = (UserDAO) context.getBean("userDAOHibernateImpl");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            String name = req.getParameter("name");
-            String password = req.getParameter("password");
-            User user = userDAO.findByName(name);
-            log.info("User logged in: " + user);
-            if (user.getPassword().equals(password)) {
-                req.getSession().setAttribute("sName", name);
-                req.getSession().setAttribute("sPassword", password);
-                req.getSession().setAttribute("list", null);
-                resp.sendRedirect("/home.jsp");
-            } else {
-                resp.sendRedirect("/login.jsp");
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            resp.sendRedirect("/login.jsp");
-        }
-    }*/

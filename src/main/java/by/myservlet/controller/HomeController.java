@@ -6,11 +6,9 @@ import by.myservlet.utils.SessionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +18,7 @@ import java.util.List;
  * @author egor
  */
 @Controller
-@RequestMapping(value = "/HomeController")
+@RequestMapping(value = "/homeController")
 public class HomeController {
 
     private final static String TABLE_NAME = "Users";
@@ -28,15 +26,10 @@ public class HomeController {
     @Autowired
     private UserDAO userDAO;
 
-//    protected ModelAndView handleRequestInternal(HttpServletRequest request,
-//                                                 HttpServletResponse response) throws Exception {
-//
-//        ModelAndView model = new ModelAndView("WelcomePage");
-//
-//        return model;
-
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView printUsers(@RequestParam("sName") String sName, @RequestParam("sPassword") String sPassword, Model model) {
+    public ModelAndView printUsers(HttpSession session, Model model) {
+        String sName = (String) session.getAttribute("sName");
+        String sPassword = (String) session.getAttribute("sPassword");
         if (SessionValidator.validate(sName, sPassword)) {
             List<User> list = userDAO.findAll();
             Collections.sort(list);
@@ -47,6 +40,4 @@ public class HomeController {
             return new ModelAndView("login");
         }
     }
-
-
 }

@@ -1,3 +1,4 @@
+/*
 package by.myservlet.controller;
 
 import by.myservlet.model.User;
@@ -13,18 +14,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+*/
 /**
  * Create on 10.2.17.
  *
  * @author egor
- */
+ *//*
+
 
 @WebServlet("/users")
 @Component
 public class UsersServlet extends HttpServlet {
 
-    /*@Autowired
-    @Qualifier(value = "userDAOImpl")*/
+    */
+/*@Autowired
+    @Qualifier(value = "userDAOImpl")*//*
+
     private UserDAO userDAO;
 
     private String name;
@@ -64,7 +69,6 @@ public class UsersServlet extends HttpServlet {
                 //resp.sendRedirect("/HomeServlet");
                 req.getRequestDispatcher("/HomeServlet").forward(req, resp);
             }
-
         }
 
         if (!(req.getParameter("operation") == null) && req.getParameter("operation").equals("delete")) {
@@ -72,8 +76,6 @@ public class UsersServlet extends HttpServlet {
             userDAO.delete(id);
             resp.sendRedirect("/HomeServlet");
         }
-
-
     }
 
     @Override
@@ -94,3 +96,4 @@ public class UsersServlet extends HttpServlet {
         return persistedUser.getName();
     }
 }
+*/
