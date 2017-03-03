@@ -9,12 +9,10 @@
 %>--%> <% //TODO: session is null. fix it %>
 <html>
 <head>
-    <%@include file="header.jsp" %>
-    <%@include file="footer.jsp" %>
     <%@include file="scripts.jsp" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Home</title>
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="/css/bootstrap.css" type="text/css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-top: 70px;
@@ -22,9 +20,24 @@
         }
     </style>
 
+    <script>
+        function deleteCallback() {
+            document.location.href = '/users'
+        }
+
+        function deleteUser(id) {
+            $.ajax({
+                url: "/users/user/" + id,
+                type: 'DELETE',
+                success: deleteCallback
+            });
+        }
+    </script>
+
 </head>
 <body>
 
+<%@include file="header.jsp" %>
 <c:if test="${list != null}">
 
     <table class="table table-striped" border="1">
@@ -52,21 +65,21 @@
                 <td> ${items.lastName}</td>
                 <td> ${items.password}</td>
                 <td>
-                    <a href="/users?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">edit</a>
+                    <a href="/users/user/create?id=${items.id}&name=${items.name}&lastName=${items.lastName}&password=${items.password}">edit</a>
                 </td>
                 <td>
-                    <a href="/users/${items.id}">delete</a>
+                    <a href="javascript:deleteUser(${items.id})">delete</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
- <%--   <a href="/users" class="btn btn-large btn-primary">Create</a>--%>
-    <form name="submitForm" method="POST" action="/users">
-        <A HREF="javascript:document.submitForm.submit()">Create</A>
+    <form action="/users/user/create" method="post">
+        <input type="submit" name = "Create">
     </form>
-</c:if>
 
+</c:if>
+<%@include file="footer.jsp" %>
 </body>
 </html>
 

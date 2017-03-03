@@ -4,6 +4,8 @@ import by.myservlet.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -20,75 +22,48 @@ import java.util.List;
 @Repository
 public class UserDAOHibernateImpl implements UserDAO {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOHibernateImpl.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
+    @Transactional
     public void create(User user) {
         Session session;
-       // try {
-            session = sessionFactory.getCurrentSession();
-       /* } catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }*/
+        session = sessionFactory.getCurrentSession();
         try {
-            session.beginTransaction();
             session.save(user);
-            session.getTransaction().commit();
-            System.out.println(user + " created");
+            logger.info(user + " created");
         } catch (RuntimeException e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
+    @Transactional
     public void update(User user) {
         Session session;
         session = sessionFactory.getCurrentSession();
-        /*try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }*/
         try {
-            session.beginTransaction();
             session.saveOrUpdate(user);
-            session.getTransaction().commit();
-            System.out.println(user + " id updated");
+            logger.info(user + " id updated");
         } catch (RuntimeException e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         Session session;
         session = sessionFactory.getCurrentSession();
-        /*try {
-            session = sessionFactory.getCurrentSession();
-        } catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }*/
         try {
-            session.beginTransaction();
             User user = session.load(User.class, id);
             session.delete(user);
-            System.out.println("User with User ID = " + id + " is deleted");
-            session.getTransaction().commit();
+            logger.info("User with User ID = " + id + " is deleted");
         } catch (RuntimeException e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -105,11 +80,7 @@ public class UserDAOHibernateImpl implements UserDAO {
     public User findByName(String name) {
         User user = null;
         Session session;
-  //      try {
             session = sessionFactory.getCurrentSession();
-        /*} catch (HibernateException e) {
-            session = sessionFactory.openSession();
-        }*/
         try {
             String queryString = "from User where name = :name";
             Query query = session.createQuery(queryString);
@@ -121,8 +92,9 @@ public class UserDAOHibernateImpl implements UserDAO {
         return user;
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public User findById(long id) {
         Session session;
         session = sessionFactory.getCurrentSession();

@@ -2,23 +2,38 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <%@include file="scripts.jsp" %>
     <title>Users</title>
-    <link href="css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="/css/bootstrap.css" type="text/css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-top: 70px;
         }
     </style>
+
+    <script>
+        function createCallback() {
+            document.location.href = '/users'
+        }
+
+        function createUser() {
+           $("#create").submit()
+
+
+        }
+    </script>
+
 </head>
 <body>
 <%@include file="header.jsp"%>
 <c:if test="${user == null}">
-<form action="/users" method="post">
+<form id = "create" method="post" action="/users/user/create">
     <input type="text" name="name" placeholder="Enter Name">
     <input type="text" name="lastName" placeholder="Enter Last Name">
     <input type="password" name="password" placeholder="Enter Password">
     <input type="hidden" name="operation" value="create">
-    <input type="submit" value="Create User">
+    <input type="submit" name="Create">
+    <%--<a href="javascript:createUser()">create</a>--%>
 </form>
 </c:if>
 
@@ -35,7 +50,7 @@
     <input type="submit" value="Update User">
 </form>
 </c:if>
-<form name="submitForm" method="GET" action="/homeController">
+<form name="submitForm" method="GET" action="/users">
     <A HREF="javascript:document.submitForm.submit()"><span class="glyphicon glyphicon-arrow-left"></span>BACK</A>
 </form>
 <%@include file="footer.jsp"%>

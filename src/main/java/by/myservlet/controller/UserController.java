@@ -1,8 +1,7 @@
 package by.myservlet.controller;
-
 import by.myservlet.model.User;
 import by.myservlet.services.UserDAO;
-import com.sun.org.apache.regexp.internal.RE;
+import by.myservlet.utils.SessionValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Create on 02.03.17.
@@ -26,26 +26,35 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/users")
 public class UserController {
 
+    private final static String TABLE_NAME = "Users";
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserDAO userDAO;
 
-
-
-
     @RequestMapping(method = RequestMethod.GET)
-    public String showUsers() {
-        return "home";
+    public ModelAndView printUsers(HttpSession session, Model model) {
+        String sName = (String) session.getAttribute("sName");
+        String sPassword = (String) session.getAttribute("sPassword");
+        if (SessionValidator.validate(sName, sPassword)) {
+            List<User> list = userDAO.findAll();
+            Collections.sort(list);
+            model.addAttribute("list", list);
+            model.addAttribute("TableName", TABLE_NAME);
+            return new ModelAndView("home");
+        } else {
+            return new ModelAndView("login");
+        }
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}", produces = "text/html;charset=UTF-8", method = RequestMethod.DELETE)
     public String doDelete(@PathVariable long id) {
         userDAO.delete(id);
         return "home";
     }
 
-    /*@RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.PUT)
     public String doUpdate(HttpSession session,
                            @RequestParam(value = "operation", required = false) String operation,
                            @RequestParam(value = "id", required = false) Long id,
@@ -74,9 +83,9 @@ public class UserController {
             return "home";
         }
         return null;
-    }*/
+    }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public String doCreate(@RequestParam(value = "operation", required = false) String operation,
                            @RequestParam(value = "name", required = false) String name,
                            @RequestParam(value = "lastName", required = false) String lastname,
